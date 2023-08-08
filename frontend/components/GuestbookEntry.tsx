@@ -3,12 +3,26 @@
 import type { NextPage } from 'next';
 import { useState } from 'react';
 
+import { usePrepareContractWrite, useContractWrite, useAccount } from 'wagmi'
+import BaseGuestbookABI from '../BaseGuestbookABI'
+
 const GuestbookEntry: NextPage = () => {
 
   const [entry, setEntry] = useState<string>('');
+  const { address, connector, isConnected } = useAccount()
+
+  /* @ts-ignore */
+  const { config } = usePrepareContractWrite({
+    address: '0x700b6A60ce7EaaEA56F065753d8dcB9653dbAD35',
+    abi: BaseGuestbookABI,
+    functionName: 'safeMint',
+    args: [address, entry],
+  })
+
+  const { write } = useContractWrite(config)
 
   const submitEntry = () => {
-    alert(entry);
+    write?.()
   }
 
   return (
