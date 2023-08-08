@@ -1,7 +1,8 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import GuestbookEntry from '../components/GuestbookEntry';
+import GuestbookEntryInput from '../components/GuestbookEntryInput';
+import GuestbookEntriesList from '../components/GuestbookEntriesList';
 
 const Home: NextPage = () => {
   return (
@@ -19,8 +20,9 @@ const Home: NextPage = () => {
         <div className='flex flex-row justify-end px-10 py-4'>
           <ConnectButton />
         </div>
-        <div className='flex flex-row justify-center items-center'>
-          <GuestbookEntry />
+        <div className='flex flex-col justify-center items-center'>
+          <GuestbookEntryInput />
+          <GuestbookEntriesList />
         </div>
       </main>
     </div>

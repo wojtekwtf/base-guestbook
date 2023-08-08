@@ -2,11 +2,12 @@
 pragma solidity ^0.8.9;
 
 import "openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
+import "openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "openzeppelin-contracts/contracts/access/Ownable.sol";
 import "openzeppelin-contracts/contracts/utils/Counters.sol";
 import "openzeppelin-contracts/contracts/utils/Strings.sol";
 
-contract BaseGuestbook is ERC721, Ownable {
+contract BaseGuestbook is ERC721, ERC721Enumerable, Ownable {
     using Counters for Counters.Counter;
 
     mapping(uint256 => string) private _entries;
@@ -24,6 +25,23 @@ contract BaseGuestbook is ERC721, Ownable {
         _tokenIdCounter.increment();
         _entries[tokenId] = entry;
         _safeMint(to, tokenId);
+    }
+
+    // The following functions are overrides required by Solidity.
+
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId,
+        uint256 batchSize
+    ) internal override(ERC721, ERC721Enumerable) {
+        super._beforeTokenTransfer(from, to, tokenId, batchSize);
+    }
+
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view override(ERC721, ERC721Enumerable) returns (bool) {
+        return super.supportsInterface(interfaceId);
     }
 
     function tokenURI(
