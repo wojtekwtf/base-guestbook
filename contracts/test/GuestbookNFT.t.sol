@@ -4,21 +4,31 @@ pragma solidity ^0.8.13;
 import "forge-std/Test.sol";
 import "../src/GuestbookNFT.sol";
 
-contract CounterTest is Test {
-    Counter public counter;
+contract GuesbookTest is Test {
+    BaseGuestbook public baseGuestbook;
 
     function setUp() public {
-        counter = new Counter();
-        counter.setNumber(0);
+        baseGuestbook = new BaseGuestbook();
     }
 
-    function testIncrement() public {
-        counter.increment();
-        assertEq(counter.number(), 1);
-    }
+    function test_mint() public {
+        baseGuestbook.safeMint(
+            0x0000000000000000000000000000000000000123,
+            "test_entry"
+        );
 
-    function testSetNumber(uint256 x) public {
-        counter.setNumber(x);
-        assertEq(counter.number(), x);
+        baseGuestbook.safeMint(
+            0x0000000000000000000000000000000000000123,
+            "new entry"
+        );
+
+        assertEq(
+            baseGuestbook.tokenURI(0),
+            "https://baseguestbook.vercel.app/0?entry=test_entry"
+        );
+        assertEq(
+            baseGuestbook.tokenURI(1),
+            "https://baseguestbook.vercel.app/1?entry=new entry"
+        );
     }
 }
