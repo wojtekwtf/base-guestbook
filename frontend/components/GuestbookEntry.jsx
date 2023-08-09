@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 const GuestbookEntry = (props) => {
 
   const { data, isError, isLoading } = useContractRead({
-    address: '0xA15BB66138824a1c7167f5E85b957d04Dd34E468',
+    address: '0x700b6A60ce7EaaEA56F065753d8dcB9653dbAD35',
     abi: BaseGuestbookABI,
     functionName: 'tokenURI',
     args: [props.tokenId]
@@ -21,7 +21,7 @@ const GuestbookEntry = (props) => {
 
   return (
     <div>
-      <p>{props.tokenId}</p>
+      <p>{data}</p>
     </div>
   );
 };

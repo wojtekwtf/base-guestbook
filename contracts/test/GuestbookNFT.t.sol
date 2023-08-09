@@ -31,4 +31,30 @@ contract GuesbookTest is Test {
             "https://baseguestbook.vercel.app/1?entry=new entry"
         );
     }
+
+    function test_total_supply() public {
+        assertEq(baseGuestbook.totalSupply(), 0);
+
+        baseGuestbook.safeMint(
+            0x0000000000000000000000000000000000000123,
+            "new entry"
+        );
+
+        baseGuestbook.safeMint(
+            0x0000000000000000000000000000000000000123,
+            "new entry"
+        );
+
+        baseGuestbook.safeMint(
+            0x0000000000000000000000000000000000000123,
+            "new entry"
+        );
+
+        baseGuestbook.safeMint(
+            0x0000000000000000000000000000000000000123,
+            "new entry"
+        );
+
+        assertEq(baseGuestbook.totalSupply(), 4);
+    }
 }

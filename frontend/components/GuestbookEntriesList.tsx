@@ -3,7 +3,6 @@
 import { useContractRead } from 'wagmi'
 import BaseGuestbookABI from '../BaseGuestbookABI'
 import { useEffect, useState } from 'react';
-import GuestbookEntryInput from './GuestbookEntryInput';
 import GuestbookEntry from './GuestbookEntry';
 
 const GuestbookEntriesList = () => {
@@ -11,13 +10,14 @@ const GuestbookEntriesList = () => {
   const [totalSupply, setTotalSupply] = useState<number>(0)
 
   const { data, isError, isLoading } = useContractRead({
-    address: '0xA15BB66138824a1c7167f5E85b957d04Dd34E468',
+    address: '0x700b6A60ce7EaaEA56F065753d8dcB9653dbAD35',
     abi: BaseGuestbookABI,
     functionName: 'totalSupply',
   })
 
   useEffect(() => {
     if (!isLoading && !isError) {
+      console.log(Number(data))
       setTotalSupply(Number(data))
     }
   }, [data])
